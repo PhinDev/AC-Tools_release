@@ -18,6 +18,7 @@ class AddMaterial(bpy.types.Operator):
     bl_idname = "ac_tools.add_material"
     bl_label = "Add Material"
     bl_description = "Add material to surface.ini"
+    bl_options = {'REGISTER', 'UNDO'}
 
     # TODO Werte analysieren
     # cd 'E:\\SteamLibrary\steamapps\common\assettocorsa'
@@ -165,6 +166,8 @@ class AddMaterial(bpy.types.Operator):
 
         write_config(cfg, surfaces_file)
 
+        load_materials(context)
+
         self.report({'INFO'}, f"Successfully added material {slot}: '{self.key}'")
         return {'FINISHED'}
     
@@ -208,6 +211,7 @@ class RemoveMaterial(bpy.types.Operator):
     bl_idname = "object.remove_material"
     bl_label = "Remove Material"
     bl_description = "Removing AC-Material prefix from object name"
+    bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod
     def poll(cls, context):
@@ -329,6 +333,7 @@ def create_material_operator(material_name):
         bl_idname = f"object.make_{material_name.lower()}"
         bl_label = f"Make {material_name.capitalize()}"
         bl_description = f"Renaming object so {material_name} material will be applied"
+        bl_options = {'REGISTER', 'UNDO'}
         
         @classmethod
         def poll(cls, context):
