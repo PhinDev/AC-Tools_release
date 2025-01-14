@@ -1,0 +1,12 @@
+{
+    "name": "AC Track",
+    "description": "Add Description...",
+    "tags" : ["circuit", "<Country>"],
+    "geotags": ["<latitude>", "<longitude>"],
+    "country": "<Country>",
+    "city": "<TheCity>",
+    "length": "<length>",
+    "width": "<width>",
+    "pitboxes": "<number>",
+    "run": "clockwise"
+}
