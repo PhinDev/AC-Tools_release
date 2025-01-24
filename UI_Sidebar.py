@@ -77,6 +77,7 @@ class UI_Materials(bpy.types.Panel):
 
         box.separator(type='SPACE')
         box.operator("ac_tools.add_material", icon='ADD', text='Add new material')
+        box.operator("ac_tools.edit_materials", icon='CURRENT_FILE', text='Edit materials')
         box.operator("ac_tools.load_materials", icon='FILE_REFRESH', text='Reload materials')
 
         row = layout.row()
@@ -114,7 +115,6 @@ class UI_ProjectSetup(bpy.types.Panel):
         else:
             box = layout.box()
             box.operator("project.edit_track_ui", icon='CURRENT_FILE')
-            box.operator("project.edit_surface_ini", icon='CURRENT_FILE')
             box.label(text="Track Folder:")
             box.prop(props, "track_folder", text="")
             box.operator("project.open_track_folder", icon='FILEBROWSER')

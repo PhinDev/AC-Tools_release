@@ -3,7 +3,7 @@ schema_version = "1.0.0"
 # Example of manifest file for a Blender extension
 # Change the values according to your extension
 id = "ac_tools"
-version = "0.1.2"
+version = "0.1.4"
 name = "AC Tools"
 tagline = "AC Tools for track modding"
 maintainer = "Phineas Engl"
@@ -57,16 +57,15 @@ copyright = [
 # Keep this a single short sentence without a period (.) at the end.
 # For longer explanations use the documentation or detail page.
 #
-# [permissions]
-# network = "Need to sync motion-capture data to server"
+[permissions]
 files = "Import/export FBX from/to disk, Manage track folders"
-# clipboard = "Copy and paste bone transforms"
 
 # Optional: build settings.
 # https://docs.blender.org/manual/en/dev/advanced/extensions/command_line_arguments.html#command-line-args-extension-build
 [build]
 paths_exclude_pattern = [
   "__pycache__/",
+  ".git*",
   "/.git/",
   "/*.zip",
 ]

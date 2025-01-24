@@ -3,7 +3,7 @@ import bpy
 import os
 
 from .Properties import FILE_SURFACES
-from .Functions import TrackFolder, get_properties, read_config, write_config
+from .Functions import TrackFolder, get_properties, open_file_in_scripting, read_config, write_config
 
 DEFAULT_MATERIALS = {
     "road": {"prefix": "1ROAD", "type": "default"},
@@ -20,9 +20,6 @@ class AddMaterial(bpy.types.Operator):
     bl_description = "Add material to surface.ini"
     bl_options = {'REGISTER', 'UNDO'}
 
-    # TODO Werte analysieren
-    # cd 'E:\\SteamLibrary\steamapps\common\assettocorsa'
-    # grep -i ff_effect ./*/data/surfaces.ini | cut -d'=' -f2 | sort -u
 
     key: StringProperty(
         name="Key",
@@ -118,9 +115,6 @@ class AddMaterial(bpy.types.Operator):
             self.report({'INFO'}, f"Error! WAV file invalid.")
             return {'FINISHED'}
         
-        # TODO choose sounds from enum
-        # E:\SteamLibrary\steamapps\common\assettocorsa\sdk\audio\ac_fmod_sdk_1_9\Assets\surfaces\ ?
-
         
         tf = TrackFolder(props.track_folder)
 
@@ -224,6 +218,24 @@ class RemoveMaterial(bpy.types.Operator):
         return {'FINISHED'}
 
 # DYNAMIC MATERIAL SYSTEM:
+
+import subprocess as sp
+class PROJECT_OT_edit_materials(bpy.types.Operator):
+    bl_idname = "ac_tools.edit_materials"
+    bl_label = "Edit Materials"
+    bl_description = "Edit custom materials"
+    
+    def execute(self, context):
+        path = TrackFolder(get_properties(context).track_folder).get_ac_file_path(FILE_SURFACES)
+        if not path or not os.path.exists(path):
+            self.report({'INFO'}, f"Cannot locate '{FILE_SURFACES}'")
+            bpy.ops.project.create_file('INVOKE_DEFAULT', filename=FILE_SURFACES)
+            return {'FINISHED'}
+
+        open_file_in_scripting(self, context, path)
+
+        return {'FINISHED'}
+
 
 class LoadMaterials(bpy.types.Operator):
     bl_idname = "ac_tools.load_materials"

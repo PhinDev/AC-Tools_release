@@ -6,7 +6,7 @@ import os
 import subprocess as sp
 
 from .Properties import FILE_UI_TRACK, FILE_SURFACES, FILE_EXT_CFG, AC_FOLDER_NAME
-from .Functions import TrackFolder, get_template, read_config, read_json, write_config, write_json, get_properties
+from .Functions import TrackFolder, get_template, open_file_in_scripting, read_config, read_json, write_config, write_json, get_properties
 
 # TODO add function to add materials to surface.ini (and adjust existing ones) + info (how to)
 #  -> read surfaces.ini -> use those materials as buttons ("make material")
@@ -70,34 +70,14 @@ class PROJECT_OT_edit_track_ui(bpy.types.Operator):
     bl_description = "Edit Track Properties/Info"
     
     def execute(self, context):
-        defEditor = "notepad.exe"
         path = TrackFolder(get_properties(context).track_folder).get_ac_file_path(FILE_UI_TRACK)
         if not path or not os.path.exists(path):
             self.report({'INFO'}, f"Cannot locate '{FILE_UI_TRACK}'")
             return {'FINISHED'}
 
-        sp.Popen([defEditor, path])
+        open_file_in_scripting(self, context, path)
 
         return {'FINISHED'}
-
-
-class PROJECT_OT_edit_surface_ini(bpy.types.Operator):
-    bl_idname = "project.edit_surface_ini"
-    bl_label = "Edit Surfaces"
-    bl_description = "Edit surface data"
-    
-    def execute(self, context):
-        defEditor = "notepad.exe"
-        path = TrackFolder(get_properties(context).track_folder).get_ac_file_path(FILE_SURFACES)
-        if not path or not os.path.exists(path):
-            self.report({'INFO'}, f"Cannot locate '{FILE_SURFACES}'")
-            bpy.ops.project.create_file('INVOKE_DEFAULT', filename=FILE_SURFACES)
-            return {'FINISHED'}
-
-        sp.Popen([defEditor, path])
-
-        return {'FINISHED'}
-
 
 
 # Definiere den Popup-Operator

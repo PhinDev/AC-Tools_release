@@ -48,6 +48,24 @@ def read_file(file_path):
         return file.read()
 
 
+def open_file_in_scripting(self, context: bpy.types.Context, path: str, workspace: str = 'Scripting'):
+    texts = bpy.data.texts
+    if path not in ([text.filepath for text in texts]):
+        bpy.ops.text.open(filepath=path, check_existing=True, display_type='DEFAULT')
+    else:
+        print(f"{path} already in texts!")
+
+    # open scripting & file
+    try:
+        context.window.workspace = bpy.data.workspaces[workspace]
+        for area in bpy.data.workspaces[workspace].screens[0].areas:
+            #print(f"Area: {area.ui_type}")
+            if area.ui_type == "TEXT_EDITOR":
+                area.spaces[0].text = bpy.data.texts[os.path.basename(path)]
+    except Exception as e:
+        self.report({'INFO'}, f"{e}")
+
+
 def open_folder(path):
     dir = path
     if os.path.isfile(path):
