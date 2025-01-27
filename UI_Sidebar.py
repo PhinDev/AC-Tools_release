@@ -143,4 +143,5 @@ class UI_ProjectExport(bpy.types.Panel):
         box = layout.box()
         box.label(text="Scene to FBX")
         box.prop(props, "disable_export_checks", text="Disable Export Checks")
+        box.prop(props, "exp_use_sel", text="Use Selection Only")
         box.operator("project.export_fbx_for_ac", text="Export FBX for KsEditor", icon='EXPORT')

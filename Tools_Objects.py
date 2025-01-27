@@ -7,10 +7,8 @@ from .Functions import create_triangle_mesh, get_distance, get_properties
 
 
 # TODO create objets referring to road (if road selected automatically place it on road / timing besides road)
-# FIXME timing doesnt seem to work...
 # TODO create simple collider objects 1WALL_<object> (cube with outer borders/convex hull?) with NULL material, visibility off
 #   advanced: make little mesh (like curvature for obj)
-# TODO make custom materials (+ material guide)
 
 
 class OBJECT_OT_create_start(bpy.types.Operator):

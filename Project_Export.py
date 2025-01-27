@@ -29,7 +29,17 @@ Parameters:
 
     def execute(self, context):
         props = get_properties(context)
-        fbx_path = os.path.join(os.path.dirname(bpy.data.filepath), Path(bpy.data.filepath).stem + ".fbx")
+        name = Path(bpy.data.filepath).stem
+        if props.exp_use_sel:
+            if len(context.selected_objects) == 0:
+                self.report({'INFO'}, "No object selected!")
+                return {'FINISHED'}
+            if len(context.selected_objects) > 1:
+                name = name + '_objects'
+            else:
+                name = context.active_object.name
+
+        fbx_path = os.path.join(os.path.dirname(bpy.data.filepath), name + ".fbx")
 
         if not props.disable_export_checks and not ready_for_export(self, context):
             return {'FINISHED'}
@@ -49,7 +59,8 @@ Parameters:
             use_mesh_modifiers_render=True,
             use_triangles=True,
             mesh_smooth_type='OFF',
-            colors_type='SRGB'
+            colors_type='SRGB',
+            use_selection=props.exp_use_sel
             )
         
         self.report({'INFO'}, f"Exported to {fbx_path}")

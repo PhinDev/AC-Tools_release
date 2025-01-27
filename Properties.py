@@ -21,7 +21,6 @@ FILE_SURFACES = 'surfaces.ini'
 # BLENDER PROPERTIES
 
 class MyProperties(bpy.types.PropertyGroup):
-    # TODO grip level (selector for 1ROAD0,1,2...)
 
     track_folder: bpy.props.StringProperty(
         name="track_folder",
@@ -58,6 +57,11 @@ class MyProperties(bpy.types.PropertyGroup):
         default=False
     ) # type: ignore
 
+    exp_use_sel: bpy.props.BoolProperty(
+        name = "Use Selection",
+        description="Use selection only on export",
+        default=False
+    ) # type: ignore
 
 # Registration-Funktionen, falls nicht automatisch registriert:
 def register():

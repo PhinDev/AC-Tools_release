@@ -8,8 +8,6 @@ import subprocess as sp
 from .Properties import FILE_UI_TRACK, FILE_SURFACES, FILE_EXT_CFG, AC_FOLDER_NAME
 from .Functions import TrackFolder, get_template, open_file_in_scripting, read_config, read_json, write_config, write_json, get_properties
 
-# TODO add function to add materials to surface.ini (and adjust existing ones) + info (how to)
-#  -> read surfaces.ini -> use those materials as buttons ("make material")
 # TODO adjust KsEditor.ini so its day always
 # TODO init blender file (insert track template w/ path + curb w/ path)
 
